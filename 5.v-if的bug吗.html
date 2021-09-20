@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+        <style>
+            .screen {
+                background-color: #eee;
+                width: auto;
+                height: auto;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                color: #000;
+                font-size: 30px;
+            }
+            .blue {
+                border: 11px solid blue;
+            }
+            .red {
+                border: 11px solid red;
+            }
+            [v-cloak] {
+                display: none;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="app" v-cloak>
+            <h2>这里如果在之前的输入框里输入了内容,切换后内容不会消失,什么情况?</h2>
+            <h3>原因在于在if-else这种互斥的情况中,vue会尽量复用已有的元素,来提高性能,虚拟DOM.
+
+                <br>
+                解决方案:
+                <br>
+                加一个key,key是独一无二的标志.两个key一样的话会复用,不一样的话则不复用.
+
+            </h3>
+            <div id="key">
+                <h4>这是加了key的情况:</h4>
+                <div class="div1" v-if="userlogin">
+                    <input class="blue" type="text" placeholder="使用用户名登录" key="user">
+                </div>
+                <div class="div1" v-else>
+                    <input class="red" type="text" placeholder="使用EMAIL登录" key="email">
+                </div>
+                <br>
+                <br>
+                <button @click="userlogin=!userlogin">切换登录方式后已经输入的值会清空</button>
+            </div>
+            <hr>
+            <div id="nokey">
+                <h4>这是没有加key的情况:</h4>
+                <div class="div1" v-if="userlogin1">
+                    <input class="blue" type="text" placeholder="使用用户名登录">
+                </div>
+                <div class="div1" v-else>
+                    <input class="red" type="text" placeholder="使用EMAIL登录">
+                </div>
+                <br>
+                <br>
+                <button @click="userlogin1=!userlogin1">切换登录方式后不会清空已有输入</button>
+            </div>
+        </div>
+    </body>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+    <script>
+        setTimeout(() => {
+
+
+            const app = new Vue({
+                el: "#app",
+                data: {
+                    userlogin: 1,
+                    userlogin1: 1
+                },
+                methods: {
+                    chg1: function () {
+                        this.url += "<p class='blue'>hehe</p>\n"
+                    }
+                }
+            })
+
+        }, 1000);
+    </script>
+</html>

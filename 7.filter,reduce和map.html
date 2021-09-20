@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>filter,reduce,map</title>
+        <style>
+            .tips {
+                margin: 20px 20px 30px;
+                padding: 10px;
+                border-radius: 8px;
+                box-shadow: 2px 2px 10px rgb(102, 99, 99);
+            }
+            .tipsp {
+                background-color: rgba(209, 232, 248, 0.3);
+                padding: 5px;
+            }
+            h5{margin: 0 auto 10px;}
+        </style>
+    </head>
+    <body>
+        <div id="app">
+            <div class="tips">
+                <h5>filter进行过滤,把回调函数返回true的加入新数组</h5>
+                <p class="tipsp ">{{tips1}}</p>
+                <button @click="dofilter">do filter,n&lg;100
+                </button>
+            </div>
+            <div class="tips">
+                <h5>map针对数组的每一项进行处理,每次返回一个值</h5>
+                <p class="tipsp ">{{tips2}}</p>
+                <button @click="domap">do map,n*2
+                </button>
+            </div>
+            <div class="tips">
+                <h5>reduce对数组的所有项进行汇总,reduce的参数也是个回调函数,此函数需要两个参数prevalue, n,其中n和之前的一样,表示数组的当前值,而prevalue继承reduce上次计算的结果</h5>
+                <p class="tipsp ">{{tips3}}</p>
+                <button @click="doreduce">do reduce,求和
+                </button>
+            </div>
+            <div class="tips">
+                <h5>三个链式加起来使用:用箭头函数,后面再说</h5>
+                <!-- <p class="tipsp ">{{tips3}}</p>
+                <button @click="doreduce">do reduce,求和
+                </button> -->
+            </div>
+            <h2>总体意义感觉不是很大,装逼写法</h2>
+            可以在<a href="https://www.bilibili.com/video/BV15741177Eh?p=45&share_source=copy_web" target="_blank">https://www.bilibili.com/video/BV15741177Eh?p=45&share_source=copy_web</a>进行预习
+        </div>
+        <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+        <script>
+
+            const app = new Vue({
+                el: '#app',
+                data: {
+                    tips1: "",
+                    tips2: "",
+                    tips3: "",
+                    nums: [
+                        10,
+                        100,
+                        130,
+                        500,
+                        20
+                    ]
+                },
+                methods: {
+                    dofilter() {
+                        newnums = this.nums.filter(function (n) {
+                            return n < 100
+                        })
+                        this.tips1 = newnums.toString()
+                    },
+                    domap() {
+                        newnums = this.nums.map(function (n) {
+                            return n * 2
+                        })
+                        this.tips2 = newnums.toString()
+                    },
+                    doreduce() {
+                        total = this.nums.reduce(function (prevalue, n) {
+                            return prevalue + n
+                        })
+                        this.tips3 = total.toString()
+                    }
+                }
+            })
+        </script>
+    </body>
+</html>

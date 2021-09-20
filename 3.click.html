@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .screen{background-color: red;width: 100px;height: 80px;display: flex;align-items: center;justify-content: center;color: #fff;font-size: 30px;}
+    </style>
+</head>
+<body>
+    <div id="app">
+        <div class="screen">
+            {{counter}}
+        </div>
+        <button @click="jisuan(1)">+</button>
+        <button @click="jisuan(-1)">-</button>
+    </div>
+</body>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+<script>
+    
+    const app=new Vue({
+        el:"#app",
+        data:{
+           counter:0
+        },
+        methods:{
+            jisuan:function(e){
+                this.counter+=e;
+            }
+        },
+        beforeCreate:function(){
+            // alert(1)
+        }
+    })
+</script>
+</html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+        <style>
+            li{border: 1px solid #000;width: 100px;height: 30px;margin-bottom: 10px;background-color: #ccf;transition: all .3s;}
+            li.active {
+                color: #f00;
+                background-color: #fff;
+            }
+            li.green{background-color: greenyellow;}
+        </style>
+    </head>
+    <body>
+        <div id="app">
+
+            <ul>
+
+                <li v-for="(m,index) in movies" :class="{active:isactive==index}" @click="isactive=index">{{index}}.{{m}}</li>
+
+            </ul>
+
+            <button @click='isgreen=!isgreen'>toggle green</button>
+        </div>
+
+        <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+        <script>
+            const app = new Vue({
+                el: "#app"
+            , data : {
+                isactive: "0",
+                isgreen:false,
+                movies:['海王','魔鬼代言人','极速飞车','绝命毒师']
+            }
+        })
+
+
+       
+        </script>
+    </body>
+</html>
