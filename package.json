@@ -24,6 +24,7 @@
     "css-loader": "^6.3.0",
     "install": "^0.13.0",
     "npm": "^7.24.0",
+    "reverse-color-loader": "^1.0.1",
     "style-loader": "^3.2.1",
     "vue-loader": "^15.9.8",
     "vue-template-compiler": "^2.6.14",

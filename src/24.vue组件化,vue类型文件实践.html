@@ -1,13 +1,97 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>24.vue组件化,vue类型文件实践.html</title>
-</head>
-<body>
+  </head>
+  <body>
+    <ol>
+      <li>
+        总结写法
+      </li>
+      <li>
+        首先入口页面只要写
+        <xmp><div id="app"></div></xmp>
+      </li>
+      <li>
+        然后在js部分,首先
+        <xmp
+>
+                import Vue from "vue"
+            </xmp
+        >
+      </li>
+      <li>
+        然后导入.vue文件 代码如下
+        <xmp>
+                //针对24.vue组件化,vue类型文件实践.html这个文件
+import Vue from 'vue';
+// import App from './24App';
+import App from '../../vue/24App.vue';
+new Vue({
+    el: "#app",
+    template: "<App></App>",
+    components: {
+        App:App
+        // App
+    }
+
+})
+            </xmp>
+      </li>
+      <li>
+          在vue文件里面这么写:
+          <xmp>
+            <template>
+                <div>
+                  <ul>
+                    <li
+                      class="list"
+                      v-for="(color, index) in colors"
+                      :key="index + color.val"
+                    >
+                      <h3 :style="{ background: color.val }">
+                        <Taowa :incolor="color.val"></Taowa>
+                      </h3>
+                      <p class="shape">{{ color.name.replace("色", "") }}</p>
+                    </li>
+                  </ul>
+                </div>
+              </template>
+              <script>
+              import Taowa from "./24AppTaowa.vue";
+              export default {
+                name: "App",
+                components: {
+                  // Taowa:Taowa
+                  Taowa,
+                },
+                data() {
+                  return {
+                    colors: [
+                      {
+                        name: "红色",
+                        val: "rgb(228, 21, 21)",
+                      },
+                      {
+                        name: "白色",
+                        val: "rgb(255, 255, 255)",
+                      },
+                     
+                    ],
+                  };
+                },
+              };
+              </script>
+              <style scoped>
+          
+              </style>
+          </xmp>
+      </li>
+    </ol>
     <div id="app"></div>
     <script src="../dist/index1.js"></script>
-</body>
+  </body>
 </html>
