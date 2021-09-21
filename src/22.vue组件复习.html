@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="zh">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vue组件作用域</title>
+    <style>
+      .box {
+        border: 1px solid rgba(131, 128, 128, 0.692);
+        padding: 20px 10px;
+        /* display: inline-block; */
+        width: 160px;
+        box-shadow: 3px 5px 5px rgb(122, 117, 117);
+        border-radius: 5px;
+        margin: 20px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="appzujian">
+      <div class="box" style="width: 80%;font-size: 16px;;">
+        总结:
+        <br>
+        插槽作用域的作用:
+        <br>
+        父级在调用组件的时候,调用组件的内容(data),但是父级决定如何显示这些内容.
+
+        <br>
+        实现方法: <br>
+        <ol>
+          <li>首先要给组件的模板添加一个slot插槽,name属性是插槽的名称.</li>
+          <li>然后给插槽通过v-bind:aaa="bbb"的形式向外发射数据.</li>
+          <li>其中上面的aaa是将来外层调用组件时接收的名称,bbb是组件内部的数据变量</li>
+          <li>外层在调用组件的时候,给组件内部添加一个template标签,用来替换掉组件里面的slot,这个template标签有一个v-slot:slotname="ccc"属性,此属性的slotname就是组件插槽的name,而ccc是一个自定的名称,叫什么都行,ccc是名称,ccc的本质是￡子组件上面的aaa组成的一个对象(上面应该是可以v-bind多个,比如v-bind:aaa以及v-bind:xxx)</li>
+          <li>
+            此时在父级调用组件的组件标签内的template里面的代码里,就可以调用ccc.aaa,ccc.xxx这个数值了
+          </li>
+          <li>
+            如果内层组件的模板中的slot没有写名字,父级在调用的时候把
+            v-slot:slot1="ccc"改成#dafault="ccc"就行
+          </li>
+        </ol>
+      </div>
+      <zujian1 :title="shapes.title" :items="shapes.items"></zujian1>
+      <!-- 现在的需求是:如果是颜色狂,则用不同的色彩显示 -->
+
+      <zujian1 :title="colors.title" :items="colors.items">
+        <template v-slot:slot1="zzyobj">
+          <li
+            :style="{color:color.color}"
+            v-for="(color ,index ) in zzyobj.listitems"
+          >
+            <span>{{color.name}}</span>
+          </li>
+        </template>
+      </zujian1>
+    </div>
+    <template id="tmp1">
+      <div class="box">
+        <h1>{{title}}</h1>
+        <ul>
+          <slot name="slot1" v-bind:listitems="items">
+            <li v-for="(item,index) in items">
+              <span>{{item.name}}</span>
+              <sub>{{item.borders}}</sub>
+            </li>
+          </slot>
+        </ul>
+      </div>
+    </template>
+    <script src="../node_modules/vue/dist/vue.min.js"></script>
+    <script>
+      new Vue({
+        el: "#appzujian",
+        data: {
+          shapes: {
+            title: "图形",
+            items: [
+              { name: "三角形", borders: 3 },
+              { name: "正方形", borders: 4 },
+              { name: "六边形", borders: 6 },
+            ],
+          },
+          colors: {
+            title: "色彩",
+            items: [
+              { name: "绿色", color: "gree" },
+              { name: "红色", color: "#f00" },
+              { name: "蓝色", color: "blue" },
+              { name: "紫色", color: "purple" },
+            ],
+          },
+        },
+        components: {
+          zujian1: {
+            template: "#tmp1",
+            props: {
+              title: {
+                type: String,
+                default: "box",
+              },
+              items: {
+                type: Array,
+              },
+            },
+          },
+        },
+      });
+    </script>
+  </body>
+</html>

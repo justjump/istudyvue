@@ -1,10 +1,10 @@
 const path = require('path')
 module.exports = {
     mode: 'development',
-    entry: './src/assets/js/main.js',
+    entry: './src/assets/js/main1.js',
     output: {
         path: path.resolve(__dirname, 'dist'),
-        filename: 'index.js',
+        filename: 'index1.js',
     },
     module: {
         rules: [{

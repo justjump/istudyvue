@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="zh">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vue组件作用域</title>
+    <style>
+      body {
+        background-color: #e1ffea;
+        width:400px;
+        margin:30px auto;
+      }
+
+      .container {
+        margin: 0 auto;
+        max-width: 480px;
+        padding: 2rem;
+      }
+
+      .list-group {
+        background-color: #fff;
+        border-radius: 0.5rem;
+        list-style: none;
+        margin: 0 0 1.5rem 0;
+        padding: 0;
+      }
+      .list-group li {
+        border-bottom: 1px solid #4b7fee;
+        border-left: 1px solid #4b7fee;
+        border-right: 1px solid #4b7fee;
+        padding: 1.5rem;
+      }
+      .list-group li:first-child {
+        border-top-left-radius: 0.5rem;
+        border-top-right-radius: 0.5rem;
+        border-top: 1px solid #4b7fee;
+      }
+      .list-group li:last-child {
+        border-bottom-left-radius: 0.5rem;
+        border-bottom-right-radius: 0.5rem;
+      }
+
+      .image-box {
+        margin: 0;
+      }
+      .image-box img {
+        border-top-left-radius: 0.5rem;
+        border-top-right-radius: 0.5rem;
+        display: block;
+        width: 100%;
+      }
+      .image-box figcaption {
+        background-color: #4b7fee;
+        border-bottom-left-radius: 0.5rem;
+        border-bottom-right-radius: 0.5rem;
+        color: #fff;
+        display: block;
+        padding: 0.75rem;
+        text-align: center;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="app">
+      <listgroup :items="dummyTexts">
+        <template v-slot:slot1="slotProps"> {{ slotProps.content.text }} </template>
+      </listgroup>
+
+      <listgroup :items="photos">
+        <template v-slot:slot1="foo">
+          <imagebox
+            :src="foo.content.url"
+            :caption="foo.content.caption"
+          ></imagebox>
+        </template>
+      </listgroup>
+    </div>
+
+    
+    <script src="../node_modules/vue/dist/vue.min.js"></script>
+    <script>
+      new Vue({
+        el: "#app",
+        data: {
+          dummyTexts: [
+            { key: 1, text: "Pri mundi voluptatum at" },
+            { key: 2, text: "Harum reprimique cu vel" },
+            { key: 3, text: "Homero aperiam sed ex" },
+            { key: 4, text: "Ex sed facete reprehendunt" },
+          ],
+          photos: [
+            {
+              key: 1,
+              url: "https://source.unsplash.com/wovHP4fcrTM",
+              caption: "New York",
+            },
+            {
+              key: 2,
+              url: "https://source.unsplash.com/2fpOAxv9SEk",
+              caption: "Couch and two dogs",
+            },
+            {
+              key: 3,
+              url: "https://source.unsplash.com/5jSBD2Xd0PQ",
+              caption: "Automobile",
+            },
+          ],
+        },
+        components: {
+          listgroup: {
+            template: `
+        <ul class="list-group">
+          <li v-for="item in items" :key="item.key">
+            <slot name="slot1" :content="item"></slot>
+          </li>
+        </ul>
+      `,
+            props: ["items"],
+          },
+          imagebox: {
+            template: `
+    <figure class="image-box">
+      <img :src="src" :alt="caption" />
+      <figcaption>{{ caption }}</figcaption>
+    </figure>
+  `,
+            props: ["src", "caption"],
+          },
+        },
+      });
+    </script>
+  </body>
+</html>
