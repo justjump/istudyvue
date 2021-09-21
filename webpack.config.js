@@ -1,3 +1,9 @@
-module.exports={
+const path = require('path')
+module.exports = {
     mode: 'development',
+    entry: './src/assets/js/main.js',
+    output: {
+        path: path.resolve(__dirname, 'dist'),
+        filename: 'index.js',
+    }
 }
